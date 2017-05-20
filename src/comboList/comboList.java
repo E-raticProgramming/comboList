@@ -24,18 +24,25 @@ public class ComboList extends AbstractList{
         }
         public void setNodeData(T in){
             info = in;
+        }public void setPrevNode(Node<T> n){
+            prev = n;
+        }public void setNextNode(Node<T> n){
+            next = n;
         }
     }
     
     public int size;
     public int[] data;
-    
+    public Node listNode;
     public ComboList() {
         Node<int[]> element = new Node <int[]> ();
+        listNode = element;
     }
-    public ComboList(int size) {
-        Node<int[]> element = new Node <int[]> ();
-        element.setNodeData(new int[size]);
+    @SuppressWarnings("rawtypes")
+    public ComboList(int size, Node prev, Node next) {
+        data = new int[size];
+        Node<int[]> element = new Node <int[]> (data,prev,next);
+        listNode = element;
     }
     
     public Object get(int index) {
@@ -48,8 +55,19 @@ public class ComboList extends AbstractList{
         
     }
     public void add (int index, int element) { //adds element at specified index
+        int[] n1 = new int[data.length - index];
+        System.arraycopy(data, 0, n1, 0, data.length - index);
+        int[] n2 = new int[data.length - n1.length];
+        System.arraycopy(data, n1.length, n2, 0, data.length - n1.length);
+        Node node1 = new Node(n1,null, null);
+        int[] temp = {element};
+        Node insertion = new Node (temp,node1,null);
+        node1.setNextNode(insertion);
+        Node node2 = new Node(n2,insertion,null);
+        insertion.setNextNode(node2);
+        listNode = node1;
         
-        
+       
     }
     @Override
     public Object remove (int index) {
@@ -59,6 +77,20 @@ public class ComboList extends AbstractList{
     
     //test client
     public static void main (final String[] args) {
+        ComboList test = new ComboList (4,null,null);
+        test.data[0] = 0;
+        test.data[1] = 1;
+        test.data[2] = 2;
+        test.data[3] = 3;
+        
+        test.add(2, 100);
+        //this does not work
+        //TODO: trace the fucking linked list
+        for (int i = 0; i < test.data.length; i ++) {
+            System.out.println(test.data[i]);
+        }
+        
+        
         /*
         int[] a1 = {0,1,2};
         int[] a2 = {2,3,4};
@@ -67,6 +99,7 @@ public class ComboList extends AbstractList{
         System.arraycopy( a2, 0, newArray, a1.length, a2.length );
         for (int i = 0; i < newArray.length; i ++) System.out.println(newArray[i]);
         */
+        
     }
 
 }
