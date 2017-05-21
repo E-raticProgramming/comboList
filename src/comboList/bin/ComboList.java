@@ -7,7 +7,7 @@ package comboList;
 
 //possible imports:
 import java.util.*;
-public class ComboList extends AbstractList{
+public class ComboList{
     public static class Node {
         int[] info;
         Node prev;
@@ -53,9 +53,24 @@ public class ComboList extends AbstractList{
     public Object get(int index) {
         return null;
     }
-    public int size() {
-        return this.size;
-    }
+    public int size(int element) {
+      int count = 0;
+      Node current = head;
+      while (current.next != null ) {
+  		for(int i = 0;i < current.info.length;i++ ){
+  			if (current.info[i] == element){
+  			return count;
+  	  }
+  		count++;
+  	}
+      
+   }
+      return count;
+ }
+
+    	
+    	
+    
     public void addLast (int element) {
     	int nums[] = new int[1];
     	nums[0] = element;
@@ -142,13 +157,11 @@ public class ComboList extends AbstractList{
     	head = new Node(vals,null,temp);
     	head.next.setPrevNode(head);
     }
+        	
     
     	
     
-    @Override
-    public Object remove (int index) {
-        return null;
-    }
+  
     //public void importAtIndex ()
     
     //test client
@@ -169,7 +182,7 @@ public class ComboList extends AbstractList{
             System.out.println(test.data[i]);
         }
         
-        test.addFirst(2);
+        test.size(2);
         System.out.println();
         
         
