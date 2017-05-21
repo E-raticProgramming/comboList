@@ -29,14 +29,7 @@ public class ComboList extends AbstractList{
         }public void setNextNode(Node n){
             next = n;
         }
-        public int getIndex(int element){
-        	for(int i = 0;i < head.info.length;i++){
-        		if(head.info[i] == element){
-        			return i;
-        		}
-        	}
-        	return -1;
-        }
+        
 //        public int getElement(int index){
 //        	
 //        	
@@ -81,6 +74,58 @@ public class ComboList extends AbstractList{
         
        
     }
+    public int getIndex(int element){
+    	int count = 0;
+    	Node current = head;
+    	while (current.next != null ) {
+    		for(int i = 0;i < current.info.length;i++){
+    			if(current.info[i] == element){
+    				return count;
+    			}
+    			count++;
+    		}
+    		current = current.next;
+    		
+    	}
+    	if (current.next == null) {
+    			for(int i = 0;i < current.info.length;i++){
+    			
+    			if(current.info[i] == element){
+    				return count;
+    			}
+    			count++;
+    			}
+    	}
+    	
+    	return -1;
+    }
+    public int getElement(int index){
+    	int count = 0;
+    	Node current = head;
+    	while (current.next != null ) {
+    		for(int i = 0;i < current.info.length;i++ ){
+    			if(current.info[i] == index){
+    			return count;
+    		}
+    		count++;
+    	}
+    	current = current.next;
+    }
+    	if (current.next == null){
+    		for(int i = 0;i < current.info.length;i++){
+    		
+    		if(current.info[i] == index){
+    			return count;
+    		}	
+    		count++;
+    		}
+    		
+    	}
+    	return -1;
+ }
+    
+    	
+    
     @Override
     public Object remove (int index) {
         return null;
@@ -96,8 +141,10 @@ public class ComboList extends AbstractList{
         test.data[3] = 3;
         
         test.add(2, 100);
+        System.out.println(test.getIndex(3));
+        System.out.println(test.getElement(100));
         //this does not work
-        //TODO: trace the fucking linked list
+        //TODO: trace the darn linked list
         for (int i = 0; i < test.data.length; i ++) {
             System.out.println(test.data[i]);
         }
