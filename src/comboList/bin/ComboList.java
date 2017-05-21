@@ -4,7 +4,7 @@
  * Project: ComboList
  */
 package comboList;
-//test
+
 //possible imports:
 import java.util.*;
 public class ComboList extends AbstractList{
@@ -56,7 +56,14 @@ public class ComboList extends AbstractList{
     public int size() {
         return this.size;
     }
-    public void add (int element) { // adds element to end of array
+    public void addLast (int element) {
+    	int nums[] = new int[1];
+    	nums[0] = element;
+    	Node current = head;
+    	while(current.next != null){
+    		current = current.next;
+    	}
+    	current.next = new Node(nums,current,null);
         
     }
     public void add (int index, int element) { //adds element at specified index
@@ -124,6 +131,18 @@ public class ComboList extends AbstractList{
     	return -1;
  }
     
+    public void empty(){
+    	head = null;
+    }
+    
+    public void addFirst(int num){
+    	Node temp = head;
+    	int[] vals = new int[1];
+    	vals[0] = num;
+    	head = new Node(vals,null,temp);
+    	head.next.setPrevNode(head);
+    }
+    
     	
     
     @Override
@@ -133,6 +152,7 @@ public class ComboList extends AbstractList{
     //public void importAtIndex ()
     
     //test client
+    //test
     public static void main (final String[] args) {
         ComboList test = new ComboList (4,null,null);
         test.data[0] = 0;
@@ -142,12 +162,15 @@ public class ComboList extends AbstractList{
         
         test.add(2, 100);
         System.out.println(test.getIndex(3));
-        System.out.println(test.getElement(100));
+        System.out.println(test.getElement(2));
         //this does not work
         //TODO: trace the darn linked list
         for (int i = 0; i < test.data.length; i ++) {
             System.out.println(test.data[i]);
         }
+        
+        test.addFirst(2);
+        System.out.println();
         
         
         /*
