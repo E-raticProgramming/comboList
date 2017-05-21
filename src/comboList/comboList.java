@@ -7,49 +7,51 @@ package comboList;
 
 //possible imports:
 import java.util.*;
-public class ComboList extends AbstractList{
-    public static class Node<T> {
-        T info;
-        Node<T> prev;
-        Node<T> next;
+
+//import comboList.bin.ComboList.Node;
+public class ComboList {
+    public static int size = 0;
+    public static class Node {
+        int[] info;
+        Node prev;
+        Node next;
         public Node () {
             info = null;
             prev = null;
             next = null;
         }
-        public Node (T in, Node<T> last, Node<T> next){
+        public Node (int[] in, Node last, Node next){
             info = in;
             prev = last;
             this.next = next;
+            size = info.length;
+            
         }
-        public void setNodeData(T in){
+        public void setNodeData(int[] in){
             info = in;
-        }public void setPrevNode(Node<T> n){
+        }public void setPrevNode(Node n){
             prev = n;
-        }public void setNextNode(Node<T> n){
+        }public void setNextNode(Node n){
             next = n;
         }
     }
-    
-    public int size;
     public int[] data;
-    public Node listNode;
+    public static Node head;
     public ComboList() {
-        Node<int[]> element = new Node <int[]> ();
-        listNode = element;
+        Node element = new Node ();
+        head = element;
     }
-    @SuppressWarnings("rawtypes")
     public ComboList(int size, Node prev, Node next) {
         data = new int[size];
-        Node<int[]> element = new Node <int[]> (data,prev,next);
-        listNode = element;
+        Node element = new Node (data,prev,next);
+        head = element;
     }
-    
     public Object get(int index) {
         return null;
     }
+    //does not
     public int size() {
-        return this.size;
+        return ComboList.size;
     }
     public void add (int element) { // adds element to end of array
         
@@ -65,30 +67,97 @@ public class ComboList extends AbstractList{
         node1.setNextNode(insertion);
         Node node2 = new Node(n2,insertion,null);
         insertion.setNextNode(node2);
-        listNode = node1;
-        
-       
+        head = node1;   
+        size ++;
     }
-    @Override
-    public Object remove (int index) {
-        return null;
-    }
-    //public void importAtIndex ()
-    
-    //test client
-    public static void main (final String[] args) {
-        ComboList test = new ComboList (4,null,null);
-        test.data[0] = 0;
-        test.data[1] = 1;
-        test.data[2] = 2;
-        test.data[3] = 3;
-        
-        test.add(2, 100);
-        //this does not work
-        //TODO: trace the fucking linked list
-        for (int i = 0; i < test.data.length; i ++) {
-            System.out.println(test.data[i]);
+    //does work
+    public void set (int index, int element) {
+        int count = 0;
+        Node current = head;
+        while (current!= null ) {
+            for(int i = 0;i < current.info.length;i++,count++){
+                if(count == index){
+                    current.info[i] = element;
+                    break;
+                }
+            }
+            current = current.next;
         }
+    }
+    public int getIndex(int element){
+        int count = 0;
+        Node current = head;
+        while (current.next != null ) {
+            for(int i = 0;i < current.info.length;i++){
+                if(current.info[i] == element){
+                    return count;
+                }
+                count++;
+            }
+            current = current.next;
+        }
+        if (current.next == null) {
+            for(int i = 0;i < current.info.length;i++){
+                if(current.info[i] == element){
+                    return count;
+                }
+                count++;
+                }
+        }
+        return -1;
+    } // works
+    public int getElement(int index){
+        int count = 0;
+        Node current = head;
+        while (current != null ) {
+            for(int i = 0; i < current.info.length;i++ ){
+                if(count == index){
+                return current.info[i];
+            }
+            count++;
+        }
+        current = current.next;
+    }
+        return -1;
+ }    
+//broken
+    public void removeElement (int index) {
+        int count = 0;
+        Node current = head;
+        
+        while (current!= null ) {
+            for(int i = 0;i < current.info.length;i++,count++){
+                if(count == index){
+                    int[] new1 = new int[i];
+                    int[] new2 = new int[current.info.length - i];
+                    if (i != 0) System.arraycopy( current.info, 0, new1, 0, new1.length);
+                    System.arraycopy( current.info, i+1, new2, 0, new2.length);
+                    Node newN = new Node(new2,current,current.next);
+                    current.setNextNode(newN);
+                    break;
+                }
+            }
+            current = current.next;
+        }
+    }
+    public static void main (final String[] args) {
+        long total = 0;
+        for (int t = 0; t < 25; t++) {
+            int[] data = new int[5000];
+            for (int i = 0; i < data.length; i++) data[i] = i;
+            ComboList test = new ComboList (5000,null,null);
+            test.data = data;
+            long start = System.nanoTime();
+            test.add((int)(Math.random()*50 + 1), 00000);
+            long end = System.nanoTime() - start;
+            total = total + end;
+        }
+        System.out.println("Avg time to add to the data: "+ total/25);
+        //this does not work
+        //TODO: trace the darn linked list
+//        for (int i = 0; i < test.data.length; i ++) {
+//            System.out.println(test.data[i]);
+//        }
         
         
         /*
@@ -101,5 +170,4 @@ public class ComboList extends AbstractList{
         */
         
     }
-
 }
