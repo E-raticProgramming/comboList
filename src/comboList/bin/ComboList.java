@@ -7,9 +7,13 @@ package comboList.bin;
 
 //possible imports:
 import java.util.*;
+<<<<<<< HEAD
 @SuppressWarnings("rawtypes")
 public class ComboList extends AbstractList{
     public static int size = 0;
+=======
+public class ComboList{
+>>>>>>> getNode
     public static class Node {
         int[] info;
         Node prev;
@@ -48,11 +52,40 @@ public class ComboList extends AbstractList{
     public Object get(int index) {
         return null;
     }
+<<<<<<< HEAD
     //does not
     public int size() {
         return ComboList.size;
     }
     public void add (int element) { // adds element to end of array
+=======
+    public int size(int element) {
+      int count = 0;
+      Node current = head;
+      while (current.next != null ) {
+  		for(int i = 0;i < current.info.length;i++ ){
+  			if (current.info[i] == element){
+  			return count;
+  	  }
+  		count++;
+  	}
+      
+   }
+      return count;
+ }
+
+    	
+    	
+    
+    public void addLast (int element) {
+    	int nums[] = new int[1];
+    	nums[0] = element;
+    	Node current = head;
+    	while(current.next != null){
+    		current = current.next;
+    	}
+    	current.next = new Node(nums,current,null);
+>>>>>>> getNode
         
     }
     public void add (int index, int element) { //adds element at specified index
@@ -118,6 +151,7 @@ public class ComboList extends AbstractList{
     	current = current.next;
     }
     	return -1;
+<<<<<<< HEAD
  }    
 //broken
     public void removeElement (int index) {
@@ -152,11 +186,48 @@ public class ComboList extends AbstractList{
             total = total + end;
         }
         System.out.println("Avg time to add to the data: "+ total/25);
+=======
+ }
+    
+    public void empty(){
+    	head = null;
+    }
+    
+    public void addFirst(int num){
+    	Node temp = head;
+    	int[] vals = new int[1];
+    	vals[0] = num;
+    	head = new Node(vals,null,temp);
+    	head.next.setPrevNode(head);
+    }
+        	
+    
+    	
+    
+  
+    //public void importAtIndex ()
+    
+    //test client
+    //test
+    public static void main (final String[] args) {
+        ComboList test = new ComboList (4,null,null);
+        test.data[0] = 0;
+        test.data[1] = 1;
+        test.data[2] = 2;
+        test.data[3] = 3;
+        
+        test.add(2, 100);
+        System.out.println(test.getIndex(3));
+        System.out.println(test.getElement(2));
+>>>>>>> getNode
         //this does not work
         //TODO: trace the darn linked list
 //        for (int i = 0; i < test.data.length; i ++) {
 //            System.out.println(test.data[i]);
 //        }
+        
+        test.size(2);
+        System.out.println();
         
         
         /*
