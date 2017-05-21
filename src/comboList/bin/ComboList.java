@@ -3,11 +3,12 @@
  * Date:    20, May, 2017
  * Project: ComboList
  */
-package comboList;
+package comboList.bin;
 
 //possible imports:
 import java.util.*;
 public class ComboList extends AbstractList{
+    public static int size = 0;
     public static class Node {
         int[] info;
         Node prev;
@@ -21,6 +22,8 @@ public class ComboList extends AbstractList{
             info = in;
             prev = last;
             this.next = next;
+            size += info.length;
+            
         }
         public void setNodeData(int[] in){
             info = in;
@@ -29,14 +32,7 @@ public class ComboList extends AbstractList{
         }public void setNextNode(Node n){
             next = n;
         }
-        
-//        public int getElement(int index){
-//        	
-//        	
-//        }
     }
-    
-    public int size;
     public static int[] data;
     public static Node head;
     public ComboList() {
@@ -49,12 +45,11 @@ public class ComboList extends AbstractList{
         Node element = new Node (data,prev,next);
         head = element;
     }
-    
     public Object get(int index) {
         return null;
     }
     public int size() {
-        return this.size;
+        return ComboList.size;
     }
     public void add (int element) { // adds element to end of array
         
@@ -70,9 +65,21 @@ public class ComboList extends AbstractList{
         node1.setNextNode(insertion);
         Node node2 = new Node(n2,insertion,null);
         insertion.setNextNode(node2);
-        head = node1;
-        
-       
+        head = node1;   
+    }
+    //does work
+    public void set (int index, int element) {
+        int count = 0;
+        Node current = head;
+        while (current!= null ) {
+            for(int i = 0;i < current.info.length;i++,count++){
+                if(count == index){
+                    current.info[i] = element;
+                    break;
+                }
+            }
+            current = current.next;
+        }
     }
     public int getIndex(int element){
     	int count = 0;
@@ -85,47 +92,39 @@ public class ComboList extends AbstractList{
     			count++;
     		}
     		current = current.next;
-    		
     	}
     	if (current.next == null) {
-    			for(int i = 0;i < current.info.length;i++){
-    			
+    		for(int i = 0;i < current.info.length;i++){
     			if(current.info[i] == element){
     				return count;
     			}
     			count++;
     			}
     	}
-    	
     	return -1;
-    }
+    } // works
     public int getElement(int index){
     	int count = 0;
     	Node current = head;
-    	while (current.next != null ) {
-    		for(int i = 0;i < current.info.length;i++ ){
-    			if(current.info[i] == index){
-    			return count;
+    	while (current != null ) {
+    		for(int i = 0; i < current.info.length;i++ ){
+    			if(count == index){
+    			return current.info[i];
     		}
     		count++;
     	}
     	current = current.next;
     }
-    	if (current.next == null){
-    		for(int i = 0;i < current.info.length;i++){
-    		
-    		if(current.info[i] == index){
-    			return count;
-    		}	
-    		count++;
-    		}
-    		
-    	}
+//    	if (current.next == null){
+//    		for(int i = 0;i < current.info.length;i++){
+//        		if(current.info[i] == index){
+//        			return count;
+//        		}	
+//    		count++;
+//    		}
+//    	}
     	return -1;
- }
-    
-    	
-    
+ }    
     @Override
     public Object remove (int index) {
         return null;
@@ -142,12 +141,14 @@ public class ComboList extends AbstractList{
         
         test.add(2, 100);
         System.out.println(test.getIndex(3));
-        System.out.println(test.getElement(100));
+        System.out.println(test.getElement(3));
+        test.set(2, 123456);
+        System.out.println(test.getElement(2));
         //this does not work
         //TODO: trace the darn linked list
-        for (int i = 0; i < test.data.length; i ++) {
-            System.out.println(test.data[i]);
-        }
+//        for (int i = 0; i < test.data.length; i ++) {
+//            System.out.println(test.data[i]);
+//        }
         
         
         /*
